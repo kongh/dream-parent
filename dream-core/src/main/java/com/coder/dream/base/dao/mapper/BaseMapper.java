@@ -1,10 +1,11 @@
 package com.coder.dream.base.dao.mapper;
 
+import com.coder.dream.base.dao.model.BaseEntity;
 import com.coder.dream.base.dao.query.Query;
 
 import java.util.List;
 
-public interface BaseMapper<T> {
+public interface BaseMapper<T extends BaseEntity> {
 
     /**
      * 列表
