@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhubajie.home.dao.mapper.OrderPOMapper" >
+    <resultMap id="BaseResultMap" type="com.zhubajie.home.dao.model.po.OrderPO" >
+        <id column="order_id" property="orderId" jdbcType="INTEGER" />
+        <result column="buyer_id" property="buyerId" jdbcType="INTEGER" />
+        <result column="saler_id" property="salerId" jdbcType="INTEGER" />
+        <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+        <result column="order_source" property="orderSource" jdbcType="INTEGER" />
+        <result column="category_id" property="categoryId" jdbcType="INTEGER" />
+        <result column="is_begin" property="isBegin" jdbcType="INTEGER" />
+        <result column="product_id" property="productId" jdbcType="INTEGER" />
+        <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+        <result column="check_status" property="checkStatus" jdbcType="INTEGER" />
+        <result column="is_evaluate_buyer" property="isEvaluateBuyer" jdbcType="INTEGER" />
+        <result column="is_evaluate_saler" property="isEvaluateSaler" jdbcType="INTEGER" />
+        <result column="is_delete" property="isDelete" jdbcType="INTEGER" />
+        <result column="price" property="price" jdbcType="INTEGER" />
+        <result column="amount" property="amount" jdbcType="INTEGER" />
+        <result column="appoint_time" property="appointTime" jdbcType="TIMESTAMP" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="detail" property="detail" jdbcType="LONGVARCHAR" />
+        <result column="address" property="address" jdbcType="LONGVARCHAR" />
+        <result column="detail_address" property="detailAddress" jdbcType="LONGVARCHAR" />
+        <result column="descript" property="descript" jdbcType="LONGVARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+        order_id, buyer_id, saler_id, order_no, order_source, category_id, is_begin, product_id,
+        mobile, check_status, is_evaluate_buyer, is_evaluate_saler, is_delete, price, amount,
+        appoint_time, create_time, update_time,detail, address, detail_address, descript
+    </sql>
+
+    <!--引入BaseMapper功能-->
+    <insert id="insert" parameterType="com.zhubajie.home.dao.model.po.OrderPO" useGeneratedKeys="true" keyProperty="orderId" >
+        insert into hm_order (<include refid="Base_Column_List"/>)
+        values (
+            #{orderId,jdbcType=INTEGER},
+            #{buyerId,jdbcType=INTEGER},
+            #{salerId,jdbcType=INTEGER},
+            #{orderNo,jdbcType=VARCHAR},
+            #{orderSource,jdbcType=INTEGER},
+            #{categoryId,jdbcType=INTEGER},
+            #{isBegin,jdbcType=INTEGER},
+            #{productId,jdbcType=INTEGER},
+            #{mobile,jdbcType=VARCHAR},
+            #{checkStatus,jdbcType=INTEGER},
+            #{isEvaluateBuyer,jdbcType=INTEGER},
+            #{isEvaluateSaler,jdbcType=INTEGER},
+            #{isDelete,jdbcType=INTEGER},
+            #{price,jdbcType=INTEGER},
+            #{amount,jdbcType=INTEGER},
+            #{appointTime,jdbcType=TIMESTAMP},
+            #{createTime,jdbcType=TIMESTAMP},
+            #{updateTime,jdbcType=TIMESTAMP},
+            #{detail,jdbcType=LONGVARCHAR},
+            #{address,jdbcType=LONGVARCHAR},
+            #{detailAddress,jdbcType=LONGVARCHAR},
+            #{descript,jdbcType=LONGVARCHAR}
+        )
+    </insert>
+
+    <update id="update" parameterType="com.zhubajie.home.dao.model.po.OrderPO" >
+        update hm_order
+        <set >
+            <if test="buyerId != null" >
+                buyer_id = #{buyerId,jdbcType=INTEGER},
+            </if>
+            <if test="salerId != null" >
+                saler_id = #{salerId,jdbcType=INTEGER},
+            </if>
+            <if test="orderNo != null" >
+                order_no = #{orderNo,jdbcType=VARCHAR},
+            </if>
+            <if test="orderSource != null" >
+                order_source = #{orderSource,jdbcType=INTEGER},
+            </if>
+            <if test="categoryId != null" >
+                category_id = #{categoryId,jdbcType=INTEGER},
+            </if>
+            <if test="isBegin != null" >
+                is_begin = #{isBegin,jdbcType=INTEGER},
+            </if>
+            <if test="productId != null" >
+                product_id = #{productId,jdbcType=INTEGER},
+            </if>
+            <if test="mobile != null" >
+                mobile = #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="checkStatus != null" >
+                check_status = #{checkStatus,jdbcType=INTEGER},
+            </if>
+            <if test="isEvaluateBuyer != null" >
+                is_evaluate_buyer = #{isEvaluateBuyer,jdbcType=INTEGER},
+            </if>
+            <if test="isEvaluateSaler != null" >
+                is_evaluate_saler = #{isEvaluateSaler,jdbcType=INTEGER},
+            </if>
+            <if test="isDelete != null" >
+                is_delete = #{isDelete,jdbcType=INTEGER},
+            </if>
+            <if test="price != null" >
+                price = #{price,jdbcType=INTEGER},
+            </if>
+            <if test="amount != null" >
+                amount = #{amount,jdbcType=INTEGER},
+            </if>
+            <if test="appointTime != null" >
+                appoint_time = #{appointTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null" >
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null" >
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="detail != null" >
+                detail = #{detail,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="address != null" >
+                address = #{address,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="detailAddress != null" >
+                detail_address = #{detailAddress,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="descript != null" >
+                descript = #{descript,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where order_id = #{orderId,jdbcType=INTEGER}
+    </update>
+
+    <select id="list" parameterType="com.zhubajie.home.base.dao.query.Query" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" /> from hm_order
+        <include refid="whereReference"/>
+        <include refid="orderReference"/>
+        <include refid="pageReference"/>
+    </select>
+
+    <select id="findOne" parameterType="com.zhubajie.home.base.dao.query.Query" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" /> from hm_order
+        <include refid="whereReference"/>
+        <include refid="rowLockReference"/>
+    </select>
+
+    <select id="count" parameterType="com.zhubajie.home.base.dao.query.Query" resultType="java.lang.Integer">
+        select count(*) from hm_order
+        <include refid="whereReference"/>
+    </select>
+
+    <sql id="whereReference">
+        <where>
+            <foreach collection="filters" index="filter" item="value">
+                <choose>
+                    <when test="filter.operator == 'in' || filter.operator == 'not in'">
+                        ${filter.calculation} ${filter.column} ${filter.operator}
+                        <foreach collection="value" index="index" item="item" open="(" separator="," close=")">
+                            #{item}
+                        </foreach>
+                    </when>
+                    <when test="filter.operator == 'between'">
+                        ${filter.calculation} ${filter.column} ${filter.operator} #{value.left} and #{value.right}
+                    </when>
+                    <when test="filter.calculation == 'or'">
+                        <include refid="orFilter"/>
+                    </when>
+                    <otherwise>
+                        ${filter.calculation} ${filter.column} ${filter.operator} #{value}
+                    </otherwise>
+                </choose>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="orFilter">
+        ${filter.calculation}
+        <foreach collection="value" index="subFilter" item="subValue" open="(" separator="and" close=")">
+            <choose>
+                <when test="subFilter.operator == 'in' || subFilter.operator == 'not in'">
+                    ${subFilter.column} ${subFilter.operator}
+                    <foreach collection="subValue" index="subIndex" item="subItem" open="(" separator="," close=")">
+                        #{subItem}
+                    </foreach>
+                </when>
+                <otherwise>
+                    ${subFilter.column} ${subFilter.operator} #{subValue}
+                </otherwise>
+            </choose>
+        </foreach>
+    </sql>
+
+    <sql id="orderReference">
+        <if test="orders != null and orders.size > 0">
+            order by
+            <foreach collection="orders" index="order" item="value" separator="," >
+                ${order.column} ${order.direction}
+            </foreach>
+        </if>
+    </sql>
+
+    <sql id="pageReference">
+        <if test="pageParam != null">
+            limit #{pageParam.start},#{pageParam.limit}
+        </if>
+    </sql>
+
+    <sql id="rowLockReference">
+        <if test="rowLock != null and rowLock == true">
+            for update
+        </if>
+    </sql>
+</mapper>
