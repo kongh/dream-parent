@@ -16,6 +16,14 @@ public interface BaseMapper<T extends BaseEntity> {
     public List<T> list(Query query);
 
     /**
+     * 查找ID列表
+     *
+     * @param query
+     * @return
+     */
+    public List<Integer> findIds(Query query);
+
+    /**
      * 查找一个
      *
      * @param query

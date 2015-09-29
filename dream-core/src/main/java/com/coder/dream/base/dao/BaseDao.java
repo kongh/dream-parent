@@ -8,6 +8,8 @@ import com.coder.dream.base.dao.query.Query;
 import com.coder.dream.base.dao.query.support.DefaultDynamicQuery;
 import com.coder.dream.base.web.vo.FilterMap;
 import com.coder.dream.base.web.vo.OrderMap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
@@ -17,6 +19,9 @@ public abstract class BaseDao<T extends BaseEntity,M extends BaseMapper<T>> {
 
     @Autowired
     protected M mapper;
+
+    //日志
+    protected Logger logger = LoggerFactory.getLogger(getClass());
 
     /**
      * 创建
@@ -38,6 +43,18 @@ public abstract class BaseDao<T extends BaseEntity,M extends BaseMapper<T>> {
     public T update(T t){
         mapper.update(t);
         return t;
+    }
+
+    /**
+     * 查找一个
+     *
+     * @param id
+     * @return
+     */
+    public T findOne(Integer id){
+        FilterMap filterMap = new FilterMap();
+        filterMap.eq("id", id);
+        return findOne(filterMap);
     }
 
     /**
@@ -70,6 +87,30 @@ public abstract class BaseDao<T extends BaseEntity,M extends BaseMapper<T>> {
     public List<T> list(FilterMap filterMap,OrderMap orderMap){
         DefaultDynamicQuery query = new DefaultDynamicQuery(filterMap,orderMap);
         return mapper.list(query);
+    }
+
+    /**
+     * 查找ID列表
+     *
+     * @param filterMap
+     * @param orderMap
+     * @return
+     */
+    public List<Integer> findIds(FilterMap filterMap,OrderMap orderMap){
+        DefaultDynamicQuery query = new DefaultDynamicQuery(filterMap,orderMap);
+        return mapper.findIds(query);
+    }
+
+    /**
+     * 查找ID分页列表
+     *
+     * @param filterMap
+     * @param orderMap
+     * @return
+     */
+    public List<Integer> findIds(FilterMap filterMap,OrderMap orderMap,int pageIndex,int pageLimit){
+        DefaultDynamicQuery query = new DefaultDynamicQuery(filterMap,orderMap,pageIndex,pageLimit);
+        return mapper.findIds(query);
     }
 
     /**

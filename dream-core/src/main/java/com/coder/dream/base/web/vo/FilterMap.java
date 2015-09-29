@@ -151,7 +151,7 @@ public class FilterMap extends LinkedHashMap<FilterParam,Object>{
      * @param column
      * @param values
      */
-    public void in(String column,List<String> values){
+    public void in(String column,List<Integer> values){
         FilterParam param = new FilterParam(DynamicQuery.LOGIC_AND,column,DynamicQuery.OPERATOR_IN);
         this.put(param,values);
     }
@@ -162,7 +162,7 @@ public class FilterMap extends LinkedHashMap<FilterParam,Object>{
      * @param column
      * @param values
      */
-    public void in(String column,String[] values){
+    public void in(String column,Integer[] values){
         FilterParam param = new FilterParam(DynamicQuery.LOGIC_AND,column,DynamicQuery.OPERATOR_IN);
         this.put(param,values);
     }
@@ -173,7 +173,7 @@ public class FilterMap extends LinkedHashMap<FilterParam,Object>{
      * @param column
      * @param values
      */
-    public void notIn(String column,List<String> values){
+    public void notIn(String column,List<Integer> values){
         FilterParam param = new FilterParam(DynamicQuery.LOGIC_AND,column,DynamicQuery.OPERATOR_NOT_IN);
         this.put(param,values);
     }
