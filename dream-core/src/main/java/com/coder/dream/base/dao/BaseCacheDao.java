@@ -1,6 +1,7 @@
 package com.coder.dream.base.dao;
 
 import com.coder.dream.base.dao.domain.Page;
+import com.coder.dream.base.dao.domain.PageImpl;
 import com.coder.dream.base.dao.mapper.BaseMapper;
 import com.coder.dream.base.dao.model.BaseEntity;
 import com.coder.dream.base.web.vo.FilterMap;
@@ -19,41 +20,76 @@ public abstract class BaseCacheDao<T extends BaseEntity,M extends BaseMapper<T>>
     @Autowired
     private MemcachedClient mc;
 
-    @Override
-    public T create(T t) {
+    /**
+     * 创建
+     *
+     * @param t
+     * @param cacheEnable true:需缓存 false:无需缓存
+     * @return
+     */
+    public T create(T t,Boolean cacheEnable){
         T created = super.create(t);
-        writeOneIntoCache(created);
+        if(cacheEnable){
+            writeOneIntoCache(created);
+        }
         return created;
     }
 
     /**
-     * 缓存一个实体
+     * 更新
      *
-     * @param caching
+     * @param t
+     * @param cacheEnable true:需缓存 false:无需缓存
+     * @return
      */
-    protected void writeOneIntoCache(T caching){
-        try{
-            mc.set(getCacheEntityKey(caching.getId()),getCacheExpirationTime(),caching);
-        }catch (Exception e){
-            logger.error(e.getMessage());
+    public T update(T t,Boolean cacheEnable) {
+        T updated = super.update(t);
+        if(cacheEnable){
+            writeOneIntoCache(updated);
         }
+        return updated;
     }
 
-    @Override
-    public T findOne(Integer id) {
-        T cached = readOneFromCache(id);
-        if(cached != null){
-            return cached;
+    /**
+     * 查找一个
+     *
+     * @param id
+     * @param cacheEnable
+     * @return
+     */
+    public T findOne(Integer id,Boolean cacheEnable) {
+        if(cacheEnable){
+            T cached = readOneFromCache(id);
+            if(cached != null){
+                return cached;
+            }
         }
 
         T one = super.findOne(id);
-        writeOneIntoCache(one);
+
+        if(cacheEnable){
+            writeOneIntoCache(one);
+        }
         return one;
     }
 
-    @Override
-    public List<T> list(FilterMap filterMap, OrderMap orderMap) {
+    /**
+     * 列表
+     *
+     * @param filterMap
+     * @param orderMap
+     * @param cacheEnable true:需缓存 false:无需缓存
+     * @return
+     */
+    public List<T> list(FilterMap filterMap, OrderMap orderMap,Boolean cacheEnable) {
+        if(!cacheEnable){
+            super.list(filterMap, orderMap);
+        }
         List<Integer> ids = findIds(filterMap, orderMap);
+        return findByIds(ids);
+    }
+
+    protected List<T> findByIds(List<Integer> ids){
         if(CollectionUtils.isEmpty(ids)){
             return Collections.emptyList();
         }
@@ -85,13 +121,49 @@ public abstract class BaseCacheDao<T extends BaseEntity,M extends BaseMapper<T>>
                 writeOneIntoCache(t);
             }
         }
-
         return entities;
     }
 
-    @Override
-    public Page<T> page(FilterMap filterMap, OrderMap orderMap, int pageIndex, int pageLimit) {
-        return super.page(filterMap, orderMap, pageIndex, pageLimit);
+    /**
+     * 分页列表
+     *
+     * @param filterMap
+     * @param orderMap
+     * @param pageIndex
+     * @param pageLimit
+     * @param cacheEnable true:需缓存 false:无需缓存
+     * @return
+     */
+    public Page<T> page(FilterMap filterMap, OrderMap orderMap, int pageIndex, int pageLimit,Boolean cacheEnable) {
+        if(!cacheEnable){
+            return super.page(filterMap, orderMap, pageIndex, pageLimit);
+        }
+
+        //查询数量
+        int total = count(filterMap);
+
+        //填写结果
+        Page<T> page = null;
+        if(total == 0){
+            page = new PageImpl<T>(new ArrayList<T>(),pageIndex,pageLimit,0);
+        }else{
+            List<Integer> ids = findIds(filterMap, orderMap, pageIndex, pageLimit);
+            page = new PageImpl<T>(findByIds(ids),pageIndex,pageLimit,total);
+        }
+        return page;
+    }
+
+    /**
+     * 缓存一个实体
+     *
+     * @param caching
+     */
+    protected void writeOneIntoCache(T caching){
+        try{
+            mc.set(getCacheEntityKey(caching.getId()),getCacheExpirationTime(),caching);
+        }catch (Exception e){
+            logger.error(e.getMessage());
+        }
     }
 
     /**
