@@ -113,7 +113,7 @@ public abstract class BaseCacheDao<T extends BaseEntity,M extends BaseMapper<T>>
             Integer[] notHitsIds = new Integer[notHits.keySet().size()];
             notHits.keySet().toArray(notHitsIds);
             fixHitMap.in("id", notHitsIds);
-            List<T> list = super.list(fixHitMap, null);
+            List<T> list = super.list(fixHitMap);
             for (T t : list){
                 Integer id = t.getId();
                 Integer notHitIndex = notHits.get(id);
