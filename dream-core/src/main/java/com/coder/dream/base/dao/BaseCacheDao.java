@@ -42,12 +42,12 @@ public abstract class BaseCacheDao<T extends BaseEntity,M extends BaseMapper<T>>
      * @param cacheEnable true:需缓存 false:无需缓存
      * @return
      */
-    public T update(T t,Boolean cacheEnable) {
-        T updated = super.update(t);
-        if(cacheEnable){
-            writeOneIntoCache(updated);
+    public int update(T t,Boolean cacheEnable) {
+        int rows = super.update(t);
+        if(rows > 0 && cacheEnable){
+            writeOneIntoCache(findOne(t.getId()));
         }
-        return updated;
+        return rows;
     }
 
     /**

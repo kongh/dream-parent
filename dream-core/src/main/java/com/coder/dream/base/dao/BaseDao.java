@@ -38,11 +38,10 @@ public abstract class BaseDao<T extends BaseEntity,M extends BaseMapper<T>> {
      * 修改
      *
      * @param t
-     * @return
+     * @return 受影响的行数
      */
-    public T update(T t){
-        mapper.update(t);
-        return t;
+    public int update(T t){
+        return mapper.update(t);
     }
 
     /**
@@ -63,7 +62,17 @@ public abstract class BaseDao<T extends BaseEntity,M extends BaseMapper<T>> {
      * @return
      */
     public T findOne(FilterMap filterMap){
-        DefaultDynamicQuery query = new DefaultDynamicQuery(filterMap);
+        DefaultDynamicQuery query = new DefaultDynamicQuery(filterMap,null,false);
+        return findOne(query);
+    }
+
+    /**
+     * 查找一个
+     *
+     * @return
+     */
+    public T findOne(FilterMap filterMap,Boolean rowLock){
+        DefaultDynamicQuery query = new DefaultDynamicQuery(filterMap,null,rowLock);
         return findOne(query);
     }
 
@@ -81,11 +90,32 @@ public abstract class BaseDao<T extends BaseEntity,M extends BaseMapper<T>> {
      * 列表
      *
      * @param filterMap
+     * @return
+     */
+    public List<T> list(FilterMap filterMap){
+        DefaultDynamicQuery query = new DefaultDynamicQuery(filterMap,null,false);
+        return list(query);
+    }
+
+    /**
+     * 列表
+     *
+     * @param filterMap
      * @param orderMap
      * @return
      */
     public List<T> list(FilterMap filterMap,OrderMap orderMap){
-        DefaultDynamicQuery query = new DefaultDynamicQuery(filterMap,orderMap);
+        DefaultDynamicQuery query = new DefaultDynamicQuery(filterMap,orderMap,false);
+        return list(query);
+    }
+
+    /**
+     * 列表
+     *
+     * @param query
+     * @return
+     */
+    public List<T> list(Query query){
         return mapper.list(query);
     }
 
@@ -97,7 +127,7 @@ public abstract class BaseDao<T extends BaseEntity,M extends BaseMapper<T>> {
      * @return
      */
     public List<Integer> findIds(FilterMap filterMap,OrderMap orderMap){
-        DefaultDynamicQuery query = new DefaultDynamicQuery(filterMap,orderMap);
+        DefaultDynamicQuery query = new DefaultDynamicQuery(filterMap,orderMap,null);
         return mapper.findIds(query);
     }
 
@@ -144,7 +174,7 @@ public abstract class BaseDao<T extends BaseEntity,M extends BaseMapper<T>> {
      * @return
      */
     public int count(FilterMap filterMap){
-        DefaultDynamicQuery query = new DefaultDynamicQuery(filterMap);
+        DefaultDynamicQuery query = new DefaultDynamicQuery(filterMap,null,false);
         return count(query);
     }
 
