@@ -31,8 +31,8 @@ public class ResultMap extends LinkedHashMap<String, Object> {
      *
      * @return
      */
-    public Object getData() {
-        return this.get(DATA);
+    public <T> T getData(){
+        return (T)this.get(DATA);
     }
 
     @SuppressWarnings("unchecked")
