@@ -14,8 +14,8 @@ public class ResultMap extends LinkedHashMap<String, Object> {
     private static final String TOTAL = "total";
 
     /**
-     * 获取是否成功
-     *
+     * 鑾峰彇鏄惁鎴愬姛
+     *y
      * @return
      */
     public Boolean getSuccess() {
@@ -27,7 +27,7 @@ public class ResultMap extends LinkedHashMap<String, Object> {
     }
 
     /**
-     * 获取返回数据
+     * 鑾峰彇杩斿洖鏁版嵁
      *
      * @return
      */
@@ -45,7 +45,7 @@ public class ResultMap extends LinkedHashMap<String, Object> {
     }
 
     /**
-     * 获取返回消息
+     * 鑾峰彇杩斿洖娑堟伅
      *
      * @return
      */
@@ -58,7 +58,7 @@ public class ResultMap extends LinkedHashMap<String, Object> {
     }
 
     /**
-     * 获取总记录数
+     * 鑾峰彇鎬昏褰曟暟
      *
      * @return
      */
@@ -75,7 +75,7 @@ public class ResultMap extends LinkedHashMap<String, Object> {
     }
 
     /**
-     * 返回结果成功，返回数据为null
+     * 杩斿洖缁撴灉鎴愬姛锛岃繑鍥炴暟鎹负null
      */
     public void success() {
         this.setSuccess(true);
@@ -87,7 +87,7 @@ public class ResultMap extends LinkedHashMap<String, Object> {
     }
 
     /**
-     * 返回结果成功，返回数据为data
+     * 杩斿洖缁撴灉鎴愬姛锛岃繑鍥炴暟鎹负data
      *
      * @param data
      */
@@ -101,7 +101,7 @@ public class ResultMap extends LinkedHashMap<String, Object> {
     }
 
     /**
-     * 返回结果成功，返回数据为page
+     * 杩斿洖缁撴灉鎴愬姛锛岃繑鍥炴暟鎹负page
      *
      * @param data
      * @param total
@@ -118,7 +118,7 @@ public class ResultMap extends LinkedHashMap<String, Object> {
     }
 
     /**
-     * 返回结果失败，返回消息为null
+     * 杩斿洖缁撴灉澶辫触锛岃繑鍥炴秷鎭负null
      */
     public void failure() {
         this.setSuccess(false);
@@ -130,7 +130,7 @@ public class ResultMap extends LinkedHashMap<String, Object> {
     }
 
     /**
-     * 返回结果失败，返回消息为msg
+     * 杩斿洖缁撴灉澶辫触锛岃繑鍥炴秷鎭负msg
      *
      * @param msg
      */
