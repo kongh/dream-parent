@@ -1,4 +1,4 @@
-package com.coder.dream.base.dao.query;
+package com.coder.dream.base.data.dao.query;
 
 /**
  * 查询接口

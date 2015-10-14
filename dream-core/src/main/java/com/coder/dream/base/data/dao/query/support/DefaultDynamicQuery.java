@@ -1,7 +1,7 @@
-package com.coder.dream.base.dao.query.support;
+package com.coder.dream.base.data.dao.query.support;
 
 
-import com.coder.dream.base.dao.query.DynamicQuery;
+import com.coder.dream.base.data.dao.query.DynamicQuery;
 import com.coder.dream.base.web.vo.FilterMap;
 import com.coder.dream.base.web.vo.OrderMap;
 

@@ -1,4 +1,4 @@
-package com.coder.dream.base.dao.domain;
+package com.coder.dream.base.data.dao.domain;
 
  /**
  * A page is a sublist of a list of objects. It allows gain information about the position of it in the containing

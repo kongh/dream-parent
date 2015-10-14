@@ -1,11 +1,11 @@
-package com.coder.dream.base.dao;
+package com.coder.dream.base.data.dao;
 
-import com.coder.dream.base.dao.domain.Page;
-import com.coder.dream.base.dao.domain.PageImpl;
-import com.coder.dream.base.dao.mapper.BaseMapper;
-import com.coder.dream.base.dao.model.BaseEntity;
-import com.coder.dream.base.dao.query.Query;
-import com.coder.dream.base.dao.query.support.DefaultDynamicQuery;
+import com.coder.dream.base.data.dao.domain.Page;
+import com.coder.dream.base.data.dao.domain.PageImpl;
+import com.coder.dream.base.data.dao.mapper.BaseMapper;
+import com.coder.dream.base.data.dao.model.BaseEntity;
+import com.coder.dream.base.data.dao.query.Query;
+import com.coder.dream.base.data.dao.query.support.DefaultDynamicQuery;
 import com.coder.dream.base.web.vo.FilterMap;
 import com.coder.dream.base.web.vo.OrderMap;
 import org.slf4j.Logger;

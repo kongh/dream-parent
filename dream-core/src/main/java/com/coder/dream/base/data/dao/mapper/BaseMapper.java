@@ -1,7 +1,7 @@
-package com.coder.dream.base.dao.mapper;
+package com.coder.dream.base.data.dao.mapper;
 
-import com.coder.dream.base.dao.model.BaseEntity;
-import com.coder.dream.base.dao.query.Query;
+import com.coder.dream.base.data.dao.model.BaseEntity;
+import com.coder.dream.base.data.dao.query.Query;
 
 import java.util.List;
 

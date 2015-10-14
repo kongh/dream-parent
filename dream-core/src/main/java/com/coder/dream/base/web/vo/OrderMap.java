@@ -1,7 +1,7 @@
 package com.coder.dream.base.web.vo;
 
-import com.coder.dream.base.dao.query.DynamicQuery;
-import com.coder.dream.base.dao.query.support.OrderParam;
+import com.coder.dream.base.data.dao.query.DynamicQuery;
+import com.coder.dream.base.data.dao.query.support.OrderParam;
 
 import java.util.LinkedHashMap;
 
@@ -10,7 +10,7 @@ import java.util.LinkedHashMap;
  */
 public class OrderMap extends LinkedHashMap<OrderParam,Object>{
     /**
-     * Ë³Ðò
+     * Ë³ï¿½ï¿½
      *
      * @param column
      */
@@ -20,7 +20,7 @@ public class OrderMap extends LinkedHashMap<OrderParam,Object>{
     }
 
     /**
-     * µ¹Ðò
+     * ï¿½ï¿½ï¿½ï¿½
      *
      * @param column
      */

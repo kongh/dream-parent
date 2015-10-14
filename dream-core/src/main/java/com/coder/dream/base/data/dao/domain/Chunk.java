@@ -1,4 +1,4 @@
-package com.coder.dream.base.dao.domain;
+package com.coder.dream.base.data.dao.domain;
 
 import org.springframework.util.Assert;
 

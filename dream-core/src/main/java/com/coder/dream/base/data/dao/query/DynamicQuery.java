@@ -1,8 +1,8 @@
-package com.coder.dream.base.dao.query;
+package com.coder.dream.base.data.dao.query;
 
 import com.coder.dream.base.web.vo.FilterMap;
 import com.coder.dream.base.web.vo.OrderMap;
-import com.coder.dream.base.dao.query.support.PageParam;
+import com.coder.dream.base.data.dao.query.support.PageParam;
 
 /**
  * 动态查询接口

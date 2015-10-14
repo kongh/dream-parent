@@ -1,4 +1,4 @@
-package com.coder.dream.base.dao.model;
+package com.coder.dream.base.data.dao.model;
 
 /**
  * 基础树实体

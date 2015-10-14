@@ -1,8 +1,8 @@
 package com.coder.dream.base.web.vo;
 
-import com.coder.dream.base.dao.query.DynamicQuery;
-import com.coder.dream.base.dao.query.support.DefaultDynamicQuery;
-import com.coder.dream.base.dao.query.support.FilterParam;
+import com.coder.dream.base.data.dao.query.DynamicQuery;
+import com.coder.dream.base.data.dao.query.support.DefaultDynamicQuery;
+import com.coder.dream.base.data.dao.query.support.FilterParam;
 
 import java.util.Date;
 import java.util.LinkedHashMap;

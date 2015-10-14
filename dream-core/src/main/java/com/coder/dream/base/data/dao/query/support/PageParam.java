@@ -1,4 +1,4 @@
-package com.coder.dream.base.dao.query.support;
+package com.coder.dream.base.data.dao.query.support;
 
 /**
  * 分页参数

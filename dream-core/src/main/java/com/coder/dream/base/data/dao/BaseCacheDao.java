@@ -1,13 +1,13 @@
-package com.coder.dream.base.dao;
+package com.coder.dream.base.data.dao;
 
-import com.coder.dream.base.dao.domain.Page;
-import com.coder.dream.base.dao.domain.PageImpl;
-import com.coder.dream.base.dao.mapper.BaseMapper;
-import com.coder.dream.base.dao.model.BaseEntity;
+import com.coder.dream.base.data.cache.ICache;
+import com.coder.dream.base.data.cache.IEntityCache;
+import com.coder.dream.base.data.dao.domain.Page;
+import com.coder.dream.base.data.dao.domain.PageImpl;
+import com.coder.dream.base.data.dao.mapper.BaseMapper;
+import com.coder.dream.base.data.dao.model.BaseEntity;
 import com.coder.dream.base.web.vo.FilterMap;
 import com.coder.dream.base.web.vo.OrderMap;
-import net.rubyeye.xmemcached.MemcachedClient;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 
 import java.util.*;
@@ -17,8 +17,16 @@ import java.util.*;
  */
 public abstract class BaseCacheDao<T extends BaseEntity,M extends BaseMapper<T>> extends BaseDao<T,M>{
 
-    @Autowired
-    private MemcachedClient mc;
+    /**
+     * 实体缓存策略
+     */
+    protected IEntityCache entityCached;
+
+    /**
+     * 设置缓存
+     * @param cached
+     */
+    public abstract void setCachedManger(ICache cached);
 
     /**
      * 创建
@@ -30,7 +38,7 @@ public abstract class BaseCacheDao<T extends BaseEntity,M extends BaseMapper<T>>
     public T create(T t,Boolean cacheEnable){
         T created = super.create(t);
         if(cacheEnable){
-            writeOneIntoCache(created);
+            entityCached.writeOneIntoCache(getCacheEntityPrefixKey(),created.getId(),getCacheExpirationTime(),created);
         }
         return created;
     }
@@ -45,7 +53,8 @@ public abstract class BaseCacheDao<T extends BaseEntity,M extends BaseMapper<T>>
     public int update(T t,Boolean cacheEnable) {
         int rows = super.update(t);
         if(rows > 0 && cacheEnable){
-            writeOneIntoCache(findOne(t.getId()));
+            T one = super.findOne(t.getId());
+            entityCached.writeOneIntoCache(getCacheEntityPrefixKey(), t.getId(), getCacheExpirationTime(), one);
         }
         return rows;
     }
@@ -59,7 +68,7 @@ public abstract class BaseCacheDao<T extends BaseEntity,M extends BaseMapper<T>>
      */
     public T findOne(Integer id,Boolean cacheEnable) {
         if(cacheEnable){
-            T cached = readOneFromCache(id);
+            T cached = entityCached.readOneFromCache(getCacheEntityPrefixKey(),id);
             if(cached != null){
                 return cached;
             }
@@ -67,8 +76,12 @@ public abstract class BaseCacheDao<T extends BaseEntity,M extends BaseMapper<T>>
 
         T one = super.findOne(id);
 
+        if(one == null){
+            return null;
+        }
+
         if(cacheEnable){
-            writeOneIntoCache(one);
+            entityCached.writeOneIntoCache(getCacheEntityPrefixKey(),one.getId(),getCacheExpirationTime(),one);
         }
         return one;
     }
@@ -100,7 +113,7 @@ public abstract class BaseCacheDao<T extends BaseEntity,M extends BaseMapper<T>>
         List<T> entities = new ArrayList<T>(ids.size());
         for(int i = 0; i < ids.size(); ++i){
             Integer id = ids.get(i);
-            T cached = readOneFromCache(id);
+            T cached = entityCached.readOneFromCache(getCacheEntityPrefixKey(),id);
             if(cached == null){
                 notHits.put(id,i);
             }
@@ -118,7 +131,7 @@ public abstract class BaseCacheDao<T extends BaseEntity,M extends BaseMapper<T>>
                 Integer id = t.getId();
                 Integer notHitIndex = notHits.get(id);
                 entities.set(notHitIndex,t);
-                writeOneIntoCache(t);
+                entityCached.writeOneIntoCache(getCacheEntityPrefixKey(), id, getCacheExpirationTime(), t);
             }
         }
         return entities;
@@ -154,45 +167,12 @@ public abstract class BaseCacheDao<T extends BaseEntity,M extends BaseMapper<T>>
     }
 
     /**
-     * 缓存一个实体
+     * 获取准备缓存实体的键前缀值
      *
-     * @param caching
      */
-    protected void writeOneIntoCache(T caching){
-        try{
-            mc.set(getCacheEntityKey(caching.getId()),getCacheExpirationTime(),caching);
-        }catch (Exception e){
-            logger.error(e.getMessage());
-        }
-    }
-
-    /**
-     * 读取一个被缓存的实体
-     *
-     * @param id
-     * @return
-     */
-    protected T readOneFromCache(Integer id){
-        T cached = null;
-        try{
-            cached =  mc.get(getCacheEntityKey(id));
-        }catch (Exception e){
-            logger.error(e.getMessage());
-        }
-        return cached;
-    }
-
-    /**
-     * 获取准备缓存实体的键
-     *
-     * @param id
-     * @return
-     */
-    protected String getCacheEntityKey(Integer id){
+    protected String getCacheEntityPrefixKey(){
         StringBuffer buffer = new StringBuffer();
         buffer.append(getClass().getSimpleName());
-        buffer.append("_");
-        buffer.append(id);
         return buffer.toString();
     }
 
