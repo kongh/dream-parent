@@ -24,9 +24,9 @@ public abstract class BaseCacheDao<T extends BaseEntity,M extends BaseMapper<T>>
 
     /**
      * 设置缓存
-     * @param cached
+     * @param entityCached
      */
-    public abstract void setCachedManger(ICache cached);
+    public abstract void setCachedManger(IEntityCache entityCached);
 
     /**
      * 创建
