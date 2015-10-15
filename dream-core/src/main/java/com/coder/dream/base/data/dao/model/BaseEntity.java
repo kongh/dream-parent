@@ -6,53 +6,23 @@ import java.util.Date;
  */
 public abstract class BaseEntity extends IdEntity {
 
-    protected Integer createUserId;
+    protected Date createTime;
 
-    protected Date createDate;
+    protected Date updateTime;
 
-    protected Integer updateUserId;
-
-    protected Date updateDate;
-
-    protected transient Boolean checked;
-
-    public Integer getCreateUserId() {
-        return createUserId;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public void setCreateUserId(Integer createUserId) {
-        this.createUserId = createUserId;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
-    public Date getCreateDate() {
-        return createDate;
+    public Date getUpdateTime() {
+        return updateTime;
     }
 
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
-
-    public Integer getUpdateUserId() {
-        return updateUserId;
-    }
-
-    public void setUpdateUserId(Integer updateUserId) {
-        this.updateUserId = updateUserId;
-    }
-
-    public Date getUpdateDate() {
-        return updateDate;
-    }
-
-    public void setUpdateDate(Date updateDate) {
-        this.updateDate = updateDate;
-    }
-
-    public Boolean isChecked() {
-        return checked;
-    }
-
-    public void setChecked(Boolean checked) {
-        this.checked = checked;
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 }
